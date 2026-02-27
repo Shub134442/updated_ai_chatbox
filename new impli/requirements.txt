@@ -1,0 +1,14 @@
+flask
+firebase-admin
+nltk
+keras
+tensorflow
+scikit-learn
+numpy
+pandas
+requests
+yfinance
+openai
+deep-translator
+h5py
+pickle-mixin

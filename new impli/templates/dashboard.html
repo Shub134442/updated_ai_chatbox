@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Learned Intents Dashboard</title>
+    <style>
+        body { font-family: Arial; background: #121212; color: #f0f0f0; padding: 40px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border-bottom: 1px solid #444; text-align: left; }
+        th { color: #00f5d4; font-size: 16px; }
+        td { font-size: 14px; }
+        h1 { color: #00f5d4; }
+        form { display: inline; }
+        button { background: #282c34; color: #fff; border: 1px solid #444; padding: 5px 10px; margin: 2px; cursor: pointer; }
+        button:hover { background: #00f5d4; color: #000; }
+    </style>
+</head>
+<body>
+    <h1>🧠 AI-Learned Intents (Pending Approval)</h1>
+    {% if intents %}
+    <table>
+        <tr>
+            <th>Intent Tag</th>
+            <th>User Pattern</th>
+            <th>AI Response</th>
+            <th>AI Source</th>
+            <th>Timestamp</th>
+            <th>Actions</th>
+        </tr>
+        {% for intent in intents %}
+        <tr>
+            <td>{{ intent.tag }}</td>
+            <td>{{ intent.pattern }}</td>
+            <td>{{ intent.response }}</td>
+            <td>{{ intent.source }}</td>
+            <td>{{ intent.timestamp.strftime('%Y-%m-%d %I:%M %p') }}</td>
+            <td>
+                <form method="POST" action="/approve">
+                    <input type="hidden" name="doc_id" value="{{ intent.doc_id }}">
+                    <button type="submit">✅ Approve</button>
+                </form>
+                <form method="POST" action="/reject">
+                    <input type="hidden" name="doc_id" value="{{ intent.doc_id }}">
+                    <button type="submit">❌ Reject</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>No pending AI-learned intents at the moment.</p>
+    {% endif %}
+</body>
+</html>
